@@ -127,6 +127,55 @@ Worker получает только назначенные заказы чер�
 
 Private buckets выдаются через signed URL. Клиенты не формируют привилегированные URL самостоятельно.
 
+### Worker (planned — backend ready, app stub)
+
+| Операция | Контракт |
+|---|---|
+| Список назначений | SELECT `orders` через `order_workers`/RLS |
+| Start / complete | RPC `start_order_work`, `complete_order_manually` |
+| Фото | Storage `order-photos` + INSERT `order_photos` |
+| Realtime | `orders`, `order_status_events` (не подключено в app) |
+
+## Client RPC (Flutter, факт)
+
+| RPC | Назначение |
+|---|---|
+| `get_invitation_by_token`, `check_auth_phone_exists`, `check_auth_client_phone` | Auth gate |
+| `accept_client_invitation`, `prepare_client_auth_email_change`, `check_auth_email_exists` | Onboarding / email |
+| `create_order_dispute`, `add_dispute_attachments` | Disputes |
+| `reopen_order` | Reopen completed order |
+| `mark_notification_read`, `mark_all_notifications_read` | Inbox |
+| `upsert_device_token`, `remove_device_token` | Push |
+
+## Worker RPC (Flutter, факт)
+
+| RPC | Назначение |
+|---|---|
+| `get_invitation_by_token`, `check_auth_phone_exists`, `check_auth_worker_phone` | Auth gate |
+| `accept_company_invitation`, `prepare_worker_auth_email_change`, `check_auth_email_exists` | Onboarding / email |
+| `mark_notification_read`, `mark_all_notifications_read` | Inbox |
+| `upsert_device_token`, `remove_device_token` | Push |
+
+## Edge Functions — source of truth
+
+| Function | Канонический репозиторий |
+|---|---|
+| `calculate-price`, `match-order`, `stripe-connect`, `admin-force-cancel` | `ZipDone-web` |
+| Payment setup (`stripe-config`, `create-setup-intent`, …) | `ZipDone-Flutter-client/supabase/functions/` (дубли; сверять с web) |
+| `send-push` | Триггерится БД; исходник в client repo |
+
+## Drift registry
+
+| Риск | Детали |
+|---|---|
+| Миграции | Канон: `ZipDone-web/supabase/migrations/` (68 local / 89 remote). Client repo: 6 локальных SQL. |
+| Client cancel | Прямой UPDATE `orders`, не RPC |
+| Client reopen | RPC + fallback UPDATE |
+| Worker push routes | `/booking/:id` → `/booking` (detail route отсутствует) |
+| Local notification prefs | Client/Worker: SharedPreferences, не backend |
+
+Последняя верификация схемы: см. шапку [database-schema.md](database-schema.md).
+
 ## Ошибки
 
 Приложения должны различать:

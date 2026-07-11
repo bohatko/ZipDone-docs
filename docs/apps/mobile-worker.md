@@ -60,15 +60,32 @@ flowchart LR
 
 Push module реализован. `worker_assigned` открывает `/booking`, пока отдельного job detail нет; `new_cleaning_request` ведёт на `/home`. Payload Client игнорируется. Подробнее: [уведомления](../notifications.md).
 
-## Текущее ограничение продукта
+## Реализовано (фаза 1, аудит 2026-07-11)
 
-Worker-приложение пока не реализует основной production lifecycle:
+| Область | Статус |
+|---|---|
+| Auth (Phone OTP, invite, onboarding, blocked) | ✅ |
+| Profile / Account Info / email change | ✅ |
+| Notifications inbox + settings + FCM push | ✅ |
+| Home / Booking / Support / Orders | ❌ placeholder / mock |
+| Order execution, photos, timers | ❌ |
+| Storage API в коде | ❌ |
+| Edge Functions (прямые вызовы) | ❌ |
 
-- Booking tab является placeholder;
-- отсутствуют job list/detail;
-- отсутствуют start/complete действия;
-- отсутствует загрузка before/after photos;
-- Support использует mock UI;
-- legal pages остаются placeholder.
+### RPC, используемые сейчас
 
-До реализации этих функций приложение нельзя считать готовым к выполнению заказов в production.
+| RPC | Назначение |
+|---|---|
+| `get_invitation_by_token` | Валидация invite |
+| `check_auth_phone_exists` | Returning login |
+| `check_auth_worker_phone` | Worker gate |
+| `accept_company_invitation` | Привязка к компании |
+| `check_auth_email_exists`, `prepare_worker_auth_email_change` | Смена email |
+| `mark_notification_read`, `mark_all_notifications_read` | Inbox |
+| `upsert_device_token`, `remove_device_token` | FCM lifecycle |
+
+### Таблицы
+
+`profiles`, `workers`, `notifications`, `notification_preferences` — только они используются в коде.
+
+App-specific детали: `ZipDone-Flutter-woker/docs/` (`worker-auth-flow.md`, `screens.md`, `push-notifications.md`).

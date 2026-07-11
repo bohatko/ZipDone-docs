@@ -57,7 +57,29 @@ FCM реализован только на mobile. Device token регистри
 
 ## Реализовано не полностью
 
-- Legal pages содержат placeholder-тексты.
-- Некоторые категории и promo content остаются mock/MVP.
-- Политика отмены `in_progress`, tips/rebook и отдельные действия detail требуют сверки с backend перед релизом.
-- E2E push зависит от Firebase service account/APNs configuration.
+- Legal pages (`/about`, `/privacy`) — placeholder-тексты.
+- Home categories и promo carousel — mock/MVP (нет `service_slug` в booking flow).
+- Support Chat — snackbar «Coming soon».
+- Local notification prefs (booking/service/payment) не синхронизируются с backend.
+- `client_addresses` без Realtime (одноразовая загрузка).
+- Автотесты и CI отсутствуют (1 unit-тест парсинга).
+- E2E push зависит от `FIREBASE_SERVICE_ACCOUNT` на Supabase.
+
+## Реализовано полностью (аудит 2026-07-11)
+
+- Booking wizard → authorize → match → order detail.
+- Rebook (`?rebookFrom=`), tips, rating, dispute, reopen.
+- Stripe PaymentSheet + Checkout (web), saved cards.
+- Realtime: `orders`, `notifications`, `profiles` (auth block).
+
+## Supabase integration (факт)
+
+| Категория | Используется |
+|---|---|
+| Таблицы | `orders`, `order_ratings`, `order_workers`, `clients`, `client_addresses`, `disputes`, `notifications`, `payment_methods`, `platform_settings`, … |
+| RPC | auth (6), `create_order_dispute`, `add_dispute_attachments`, `reopen_order`, notification/device token (4) |
+| Edge Functions | `calculate-price`, `match-order`, `create-payment-intent`, `sync-payment-status`, Stripe setup/manage (7) |
+| Storage | `company-logos` (public), `dispute-attachments` (upload + signed read) |
+| Realtime | `orders`, `notifications`, `profiles` |
+
+App-specific детали: `ZipDone-Flutter-client/docs/` (`client-auth-flow.md`, `client-payments.md`, `screens.md`).

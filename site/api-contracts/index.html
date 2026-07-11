@@ -1,0 +1,1551 @@
+
+<!doctype html>
+<html lang="ru" class="no-js">
+  <head>
+    
+      <meta charset="utf-8">
+      <meta name="viewport" content="width=device-width,initial-scale=1">
+      
+        <meta name="description" content="Общая техническая документация экосистемы ZipDone">
+      
+      
+      
+        <link rel="canonical" href="https://bohatko.github.io/ZipDone-docs/api-contracts/">
+      
+      
+        <link rel="prev" href="../architecture/">
+      
+      
+        <link rel="next" href="../database-schema/">
+      
+      
+        
+      
+      
+      <link rel="icon" href="../assets/images/favicon.png">
+      <meta name="generator" content="mkdocs-1.6.1, mkdocs-material-9.7.6">
+    
+    
+      
+        <title>API и Supabase - ZipDone Knowledge Base</title>
+      
+    
+    
+      <link rel="stylesheet" href="../assets/stylesheets/main.484c7ddc.min.css">
+      
+        
+        <link rel="stylesheet" href="../assets/stylesheets/palette.ab4e12ef.min.css">
+      
+      
+
+
+    
+    
+      
+    
+    
+      
+        
+        
+        <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+        <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Roboto:300,300i,400,400i,700,700i%7CRoboto+Mono:400,400i,700,700i&display=fallback">
+        <style>:root{--md-text-font:"Roboto";--md-code-font:"Roboto Mono"}</style>
+      
+    
+    
+    <script>__md_scope=new URL("..",location),__md_hash=e=>[...e].reduce(((e,_)=>(e<<5)-e+_.charCodeAt(0)),0),__md_get=(e,_=localStorage,t=__md_scope)=>JSON.parse(_.getItem(t.pathname+"."+e)),__md_set=(e,_,t=localStorage,a=__md_scope)=>{try{t.setItem(a.pathname+"."+e,JSON.stringify(_))}catch(e){}}</script>
+    
+      
+
+    
+    
+  </head>
+  
+  
+    
+    
+      
+    
+    
+    
+    
+    <body dir="ltr" data-md-color-scheme="default" data-md-color-primary="green" data-md-color-accent="green">
+  
+    
+    <input class="md-toggle" data-md-toggle="drawer" type="checkbox" id="__drawer" autocomplete="off">
+    <input class="md-toggle" data-md-toggle="search" type="checkbox" id="__search" autocomplete="off">
+    <label class="md-overlay" for="__drawer"></label>
+    <div data-md-component="skip">
+      
+        
+        <a href="#zipdone-api-supabase-" class="md-skip">
+          Перейти к содержанию
+        </a>
+      
+    </div>
+    <div data-md-component="announce">
+      
+    </div>
+    
+    
+      
+
+  
+
+<header class="md-header md-header--shadow" data-md-component="header">
+  <nav class="md-header__inner md-grid" aria-label="Верхний колонтитул">
+    <a href=".." title="ZipDone Knowledge Base" class="md-header__button md-logo" aria-label="ZipDone Knowledge Base" data-md-component="logo">
+      
+  
+  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 8a3 3 0 0 0 3-3 3 3 0 0 0-3-3 3 3 0 0 0-3 3 3 3 0 0 0 3 3m0 3.54C9.64 9.35 6.5 8 3 8v11c3.5 0 6.64 1.35 9 3.54 2.36-2.19 5.5-3.54 9-3.54V8c-3.5 0-6.64 1.35-9 3.54"/></svg>
+
+    </a>
+    <label class="md-header__button md-icon" for="__drawer">
+      
+      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M3 6h18v2H3zm0 5h18v2H3zm0 5h18v2H3z"/></svg>
+    </label>
+    <div class="md-header__title" data-md-component="header-title">
+      <div class="md-header__ellipsis">
+        <div class="md-header__topic">
+          <span class="md-ellipsis">
+            ZipDone Knowledge Base
+          </span>
+        </div>
+        <div class="md-header__topic" data-md-component="header-topic">
+          <span class="md-ellipsis">
+            
+              API и Supabase
+            
+          </span>
+        </div>
+      </div>
+    </div>
+    
+      
+        <form class="md-header__option" data-md-component="palette">
+  
+    
+    
+    
+    <input class="md-option" data-md-color-media="" data-md-color-scheme="default" data-md-color-primary="green" data-md-color-accent="green"  aria-hidden="true"  type="radio" name="__palette" id="__palette_0">
+    
+  
+</form>
+      
+    
+    
+      <script>var palette=__md_get("__palette");if(palette&&palette.color){if("(prefers-color-scheme)"===palette.color.media){var media=matchMedia("(prefers-color-scheme: light)"),input=document.querySelector(media.matches?"[data-md-color-media='(prefers-color-scheme: light)']":"[data-md-color-media='(prefers-color-scheme: dark)']");palette.color.media=input.getAttribute("data-md-color-media"),palette.color.scheme=input.getAttribute("data-md-color-scheme"),palette.color.primary=input.getAttribute("data-md-color-primary"),palette.color.accent=input.getAttribute("data-md-color-accent")}for(var[key,value]of Object.entries(palette.color))document.body.setAttribute("data-md-color-"+key,value)}</script>
+    
+    
+    
+      
+      
+        <label class="md-header__button md-icon" for="__search">
+          
+          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M9.5 3A6.5 6.5 0 0 1 16 9.5c0 1.61-.59 3.09-1.56 4.23l.27.27h.79l5 5-1.5 1.5-5-5v-.79l-.27-.27A6.52 6.52 0 0 1 9.5 16 6.5 6.5 0 0 1 3 9.5 6.5 6.5 0 0 1 9.5 3m0 2C7 5 5 7 5 9.5S7 14 9.5 14 14 12 14 9.5 12 5 9.5 5"/></svg>
+        </label>
+        <div class="md-search" data-md-component="search" role="dialog">
+  <label class="md-search__overlay" for="__search"></label>
+  <div class="md-search__inner" role="search">
+    <form class="md-search__form" name="search">
+      <input type="text" class="md-search__input" name="query" aria-label="Поиск" placeholder="Поиск" autocapitalize="off" autocorrect="off" autocomplete="off" spellcheck="false" data-md-component="search-query" required>
+      <label class="md-search__icon md-icon" for="__search">
+        
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M9.5 3A6.5 6.5 0 0 1 16 9.5c0 1.61-.59 3.09-1.56 4.23l.27.27h.79l5 5-1.5 1.5-5-5v-.79l-.27-.27A6.52 6.52 0 0 1 9.5 16 6.5 6.5 0 0 1 3 9.5 6.5 6.5 0 0 1 9.5 3m0 2C7 5 5 7 5 9.5S7 14 9.5 14 14 12 14 9.5 12 5 9.5 5"/></svg>
+        
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M20 11v2H8l5.5 5.5-1.42 1.42L4.16 12l7.92-7.92L13.5 5.5 8 11z"/></svg>
+      </label>
+      <nav class="md-search__options" aria-label="Поиск">
+        
+        <button type="reset" class="md-search__icon md-icon" title="Очистить" aria-label="Очистить" tabindex="-1">
+          
+          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M19 6.41 17.59 5 12 10.59 6.41 5 5 6.41 10.59 12 5 17.59 6.41 19 12 13.41 17.59 19 19 17.59 13.41 12z"/></svg>
+        </button>
+      </nav>
+      
+        <div class="md-search__suggest" data-md-component="search-suggest"></div>
+      
+    </form>
+    <div class="md-search__output">
+      <div class="md-search__scrollwrap" tabindex="0" data-md-scrollfix>
+        <div class="md-search-result" data-md-component="search-result">
+          <div class="md-search-result__meta">
+            Инициализация поиска
+          </div>
+          <ol class="md-search-result__list" role="presentation"></ol>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+      
+    
+    
+      <div class="md-header__source">
+        <a href="https://github.com/bohatko/ZipDone-docs" title="Перейти к репозиторию" class="md-source" data-md-component="source">
+  <div class="md-source__icon md-icon">
+    
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 448 512"><!--! Font Awesome Free 7.1.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2025 Fonticons, Inc.--><path d="M439.6 236.1 244 40.5c-5.4-5.5-12.8-8.5-20.4-8.5s-15 3-20.4 8.4L162.5 81l51.5 51.5c27.1-9.1 52.7 16.8 43.4 43.7l49.7 49.7c34.2-11.8 61.2 31 35.5 56.7-26.5 26.5-70.2-2.9-56-37.3L240.3 199v121.9c25.3 12.5 22.3 41.8 9.1 55-6.4 6.4-15.2 10.1-24.3 10.1s-17.8-3.6-24.3-10.1c-17.6-17.6-11.1-46.9 11.2-56v-123c-20.8-8.5-24.6-30.7-18.6-45L142.6 101 8.5 235.1C3 240.6 0 247.9 0 255.5s3 15 8.5 20.4l195.6 195.7c5.4 5.4 12.7 8.4 20.4 8.4s15-3 20.4-8.4l194.7-194.7c5.4-5.4 8.4-12.8 8.4-20.4s-3-15-8.4-20.4"/></svg>
+  </div>
+  <div class="md-source__repository">
+    bohatko/ZipDone-docs
+  </div>
+</a>
+      </div>
+    
+  </nav>
+  
+</header>
+    
+    <div class="md-container" data-md-component="container">
+      
+      
+        
+          
+        
+      
+      <main class="md-main" data-md-component="main">
+        <div class="md-main__inner md-grid">
+          
+            
+              
+              <div class="md-sidebar md-sidebar--primary" data-md-component="sidebar" data-md-type="navigation" >
+                <div class="md-sidebar__scrollwrap">
+                  <div class="md-sidebar__inner">
+                    
+
+
+
+<nav class="md-nav md-nav--primary" aria-label="Навигация" data-md-level="0">
+  <label class="md-nav__title" for="__drawer">
+    <a href=".." title="ZipDone Knowledge Base" class="md-nav__button md-logo" aria-label="ZipDone Knowledge Base" data-md-component="logo">
+      
+  
+  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 8a3 3 0 0 0 3-3 3 3 0 0 0-3-3 3 3 0 0 0-3 3 3 3 0 0 0 3 3m0 3.54C9.64 9.35 6.5 8 3 8v11c3.5 0 6.64 1.35 9 3.54 2.36-2.19 5.5-3.54 9-3.54V8c-3.5 0-6.64 1.35-9 3.54"/></svg>
+
+    </a>
+    ZipDone Knowledge Base
+  </label>
+  
+    <div class="md-nav__source">
+      <a href="https://github.com/bohatko/ZipDone-docs" title="Перейти к репозиторию" class="md-source" data-md-component="source">
+  <div class="md-source__icon md-icon">
+    
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 448 512"><!--! Font Awesome Free 7.1.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2025 Fonticons, Inc.--><path d="M439.6 236.1 244 40.5c-5.4-5.5-12.8-8.5-20.4-8.5s-15 3-20.4 8.4L162.5 81l51.5 51.5c27.1-9.1 52.7 16.8 43.4 43.7l49.7 49.7c34.2-11.8 61.2 31 35.5 56.7-26.5 26.5-70.2-2.9-56-37.3L240.3 199v121.9c25.3 12.5 22.3 41.8 9.1 55-6.4 6.4-15.2 10.1-24.3 10.1s-17.8-3.6-24.3-10.1c-17.6-17.6-11.1-46.9 11.2-56v-123c-20.8-8.5-24.6-30.7-18.6-45L142.6 101 8.5 235.1C3 240.6 0 247.9 0 255.5s3 15 8.5 20.4l195.6 195.7c5.4 5.4 12.7 8.4 20.4 8.4s15-3 20.4-8.4l194.7-194.7c5.4-5.4 8.4-12.8 8.4-20.4s-3-15-8.4-20.4"/></svg>
+  </div>
+  <div class="md-source__repository">
+    bohatko/ZipDone-docs
+  </div>
+</a>
+    </div>
+  
+  <ul class="md-nav__list" data-md-scrollfix>
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href=".." class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Главная
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../architecture/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Архитектура
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+    
+  
+  
+  
+    
+    
+    
+    
+      
+        
+        
+      
+    
+    
+    <li class="md-nav__item md-nav__item--active md-nav__item--section md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_3" checked>
+        
+          
+          <label class="md-nav__link" for="__nav_3" id="__nav_3_label" tabindex="">
+            
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Контракты
+  
+
+    
+  </span>
+  
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_3_label" aria-expanded="true">
+          <label class="md-nav__title" for="__nav_3">
+            <span class="md-nav__icon md-icon"></span>
+            
+  
+    Контракты
+  
+
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+    
+  
+  
+  
+    <li class="md-nav__item md-nav__item--active">
+      
+      <input class="md-nav__toggle md-toggle" type="checkbox" id="__toc">
+      
+      
+        
+      
+      
+        <label class="md-nav__link md-nav__link--active" for="__toc">
+          
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    API и Supabase
+  
+
+    
+  </span>
+  
+  
+
+          <span class="md-nav__icon md-icon"></span>
+        </label>
+      
+      <a href="./" class="md-nav__link md-nav__link--active">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    API и Supabase
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+      
+        
+
+<nav class="md-nav md-nav--secondary" aria-label="Содержание">
+  
+  
+  
+    
+  
+  
+    <label class="md-nav__title" for="__toc">
+      <span class="md-nav__icon md-icon"></span>
+      Содержание
+    </label>
+    <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
+      
+        <li class="md-nav__item">
+  <a href="#_1" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Правила доступа
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#auth-onboarding" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Auth и onboarding
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#edge-functions" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Edge Functions
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#admin" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Admin
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#_2" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Заказы
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Заказы">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#client" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Client
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#company" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Company
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#worker" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Worker
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#_3" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Статусы
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#realtime" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Realtime
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#storage" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Storage
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#_4" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Ошибки
+      
+    </span>
+  </a>
+  
+</li>
+      
+    </ul>
+  
+</nav>
+      
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../database-schema/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Схема БД
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../storage-and-rls/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Storage и RLS
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../notifications/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Уведомления
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    
+    
+    
+    
+      
+        
+        
+      
+    
+    
+    <li class="md-nav__item md-nav__item--section md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_4" >
+        
+          
+          <label class="md-nav__link" for="__nav_4" id="__nav_4_label" tabindex="">
+            
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Приложения
+  
+
+    
+  </span>
+  
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_4_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_4">
+            <span class="md-nav__icon md-icon"></span>
+            
+  
+    Приложения
+  
+
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../apps/web/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Web
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../apps/mobile-client/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Client
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../apps/mobile-worker/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Worker
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    
+    
+    
+    
+      
+        
+        
+      
+    
+    
+    <li class="md-nav__item md-nav__item--section md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_5" >
+        
+          
+          <label class="md-nav__link" for="__nav_5" id="__nav_5_label" tabindex="">
+            
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Операции
+  
+
+    
+  </span>
+  
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_5_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_5">
+            <span class="md-nav__icon md-icon"></span>
+            
+  
+    Операции
+  
+
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../operations/knowledge-base/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Ведение базы знаний
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../operations/security/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Безопасность документации
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+    
+  </ul>
+</nav>
+                  </div>
+                </div>
+              </div>
+            
+            
+              
+              <div class="md-sidebar md-sidebar--secondary" data-md-component="sidebar" data-md-type="toc" >
+                <div class="md-sidebar__scrollwrap">
+                  <div class="md-sidebar__inner">
+                    
+
+<nav class="md-nav md-nav--secondary" aria-label="Содержание">
+  
+  
+  
+    
+  
+  
+    <label class="md-nav__title" for="__toc">
+      <span class="md-nav__icon md-icon"></span>
+      Содержание
+    </label>
+    <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
+      
+        <li class="md-nav__item">
+  <a href="#_1" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Правила доступа
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#auth-onboarding" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Auth и onboarding
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#edge-functions" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Edge Functions
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#admin" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Admin
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#_2" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Заказы
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Заказы">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#client" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Client
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#company" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Company
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#worker" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Worker
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#_3" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Статусы
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#realtime" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Realtime
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#storage" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Storage
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#_4" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Ошибки
+      
+    </span>
+  </a>
+  
+</li>
+      
+    </ul>
+  
+</nav>
+                  </div>
+                </div>
+              </div>
+            
+          
+          
+            <div class="md-content" data-md-component="content">
+              
+              <article class="md-content__inner md-typeset">
+                
+                  
+
+
+  
+  
+
+
+<h1 id="zipdone-api-supabase-">ZipDone — API и Supabase-контракты<a class="headerlink" href="#zipdone-api-supabase-" title="Permanent link">&para;</a></h1>
+<blockquote>
+<p>Обновлено: 2026-07-11<br />
+Контракт относится только к Supabase <code>nlpswsajjexnaqpwyiph</code>.</p>
+</blockquote>
+<h2 id="_1">Правила доступа<a class="headerlink" href="#_1" title="Permanent link">&para;</a></h2>
+<ul>
+<li>Public/mobile/web используют publishable/anon key и JWT пользователя.</li>
+<li>Авторизация определяется <code>profiles.role_slug</code> и RLS, а не <code>user_metadata</code>.</li>
+<li><code>service_role</code>, Stripe secret, Firebase service account и webhook secrets доступны только backend.</li>
+<li>Клиент не должен считать успешным UPDATE/DELETE без проверки результата: RLS может вернуть ноль строк.</li>
+</ul>
+<h2 id="auth-onboarding">Auth и onboarding<a class="headerlink" href="#auth-onboarding" title="Permanent link">&para;</a></h2>
+<table>
+<thead>
+<tr>
+<th>RPC</th>
+<th>Вызывающая сторона</th>
+<th>Результат</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>get_invitation_by_token</code></td>
+<td>guest</td>
+<td>Проверка invite, target type и срока</td>
+</tr>
+<tr>
+<td><code>check_auth_phone_exists</code></td>
+<td>guest</td>
+<td>Существует ли phone identity</td>
+</tr>
+<tr>
+<td><code>check_auth_client_phone</code></td>
+<td>Client</td>
+<td>Разрешён ли returning client</td>
+</tr>
+<tr>
+<td><code>check_auth_worker_phone</code></td>
+<td>Worker</td>
+<td>Разрешён ли returning worker</td>
+</tr>
+<tr>
+<td><code>accept_client_invitation</code></td>
+<td>Client</td>
+<td>Привязка клиента к компании</td>
+</tr>
+<tr>
+<td><code>accept_company_invitation</code></td>
+<td>Company/Worker</td>
+<td>Завершение invite onboarding</td>
+</tr>
+<tr>
+<td><code>prepare_client_auth_email_change</code></td>
+<td>Client</td>
+<td>Подготовка смены seed email</td>
+</tr>
+<tr>
+<td><code>prepare_worker_auth_email_change</code></td>
+<td>Worker</td>
+<td>Подготовка смены seed email</td>
+</tr>
+</tbody>
+</table>
+<p>Новый номер Client/Worker без активного invite не допускается. OTP: WhatsApp primary, SMS fallback. Канонический формат телефона — E.164.</p>
+<h2 id="edge-functions">Edge Functions<a class="headerlink" href="#edge-functions" title="Permanent link">&para;</a></h2>
+<p>Production содержит 15 активных функций.</p>
+<table>
+<thead>
+<tr>
+<th>Function</th>
+<th style="text-align: right;">JWT</th>
+<th>Назначение</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>calculate-price</code></td>
+<td style="text-align: right;">да</td>
+<td>Расчёт subtotal, fee и total по platform settings</td>
+</tr>
+<tr>
+<td><code>match-order</code></td>
+<td style="text-align: right;">да</td>
+<td>Запуск/продолжение мэтчинга</td>
+</tr>
+<tr>
+<td><code>stripe-connect</code></td>
+<td style="text-align: right;">да</td>
+<td>Stripe Express onboarding компании</td>
+</tr>
+<tr>
+<td><code>stripe-webhook</code></td>
+<td style="text-align: right;">нет</td>
+<td>Stripe webhook с проверкой подписи</td>
+</tr>
+<tr>
+<td><code>create-payment-intent</code></td>
+<td style="text-align: right;">да</td>
+<td>Авторизация оплаты заказа</td>
+</tr>
+<tr>
+<td><code>capture-payment</code></td>
+<td style="text-align: right;">да</td>
+<td>Capture PaymentIntent</td>
+</tr>
+<tr>
+<td><code>send-push</code></td>
+<td style="text-align: right;">нет</td>
+<td>Внутренний webhook доставки FCM</td>
+</tr>
+<tr>
+<td><code>create-setup-intent</code></td>
+<td style="text-align: right;">да</td>
+<td>SetupIntent для сохранения карты</td>
+</tr>
+<tr>
+<td><code>confirm-setup-intent</code></td>
+<td style="text-align: right;">да</td>
+<td>Сохранение metadata PaymentMethod</td>
+</tr>
+<tr>
+<td><code>manage-payment-method</code></td>
+<td style="text-align: right;">да</td>
+<td>Delete / set default</td>
+</tr>
+<tr>
+<td><code>sync-payment-status</code></td>
+<td style="text-align: right;">да</td>
+<td>Синхронизация PaymentIntent → <code>payments</code></td>
+</tr>
+<tr>
+<td><code>stripe-config</code></td>
+<td style="text-align: right;">да</td>
+<td>Возврат publishable Stripe config</td>
+</tr>
+<tr>
+<td><code>create-setup-checkout-session</code></td>
+<td style="text-align: right;">да</td>
+<td>Web Checkout для сохранения карты</td>
+</tr>
+<tr>
+<td><code>confirm-setup-checkout-session</code></td>
+<td style="text-align: right;">да</td>
+<td>Подтверждение Checkout Session</td>
+</tr>
+<tr>
+<td><code>admin-force-cancel</code></td>
+<td style="text-align: right;">да</td>
+<td>Admin cancel/refund с проверкой роли</td>
+</tr>
+</tbody>
+</table>
+<p><code>stripe-webhook</code> и <code>send-push</code> имеют <code>verify_jwt=false</code>, поэтому обязаны проверять собственную подпись/secret. Полные таблицы и сигнатуры RPC находятся в <a href="../database-schema/">схеме БД</a>.</p>
+<h2 id="admin">Admin<a class="headerlink" href="#admin" title="Permanent link">&para;</a></h2>
+<table>
+<thead>
+<tr>
+<th>RPC / Edge</th>
+<th>Назначение</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>get_matching_exhausted_order_ids(order_ids[])</code></td>
+<td>Заказ в <code>matching</code> без активного pending-оффера и без новых кандидатов с <code>working_day</code> + <code>working_hours</code></td>
+</tr>
+<tr>
+<td><code>admin_force_cancel_order</code></td>
+<td>Принудительная отмена с refund/cancel PaymentIntent</td>
+</tr>
+<tr>
+<td><code>admin_create_order_dispute</code></td>
+<td>Создание диспута от имени платформы</td>
+</tr>
+<tr>
+<td><code>resolve_dispute</code></td>
+<td>Решение диспута и финансовые эффекты</td>
+</tr>
+<tr>
+<td><code>admin-force-cancel</code> (Edge)</td>
+<td>Stripe cancel/refund + RPC <code>admin_force_cancel_order</code></td>
+</tr>
+</tbody>
+</table>
+<p>Миграции: <code>find_matching_companies_team_capacity</code>, <code>admin_matching_exhausted</code>.</p>
+<h2 id="_2">Заказы<a class="headerlink" href="#_2" title="Permanent link">&para;</a></h2>
+<h3 id="client">Client<a class="headerlink" href="#client" title="Permanent link">&para;</a></h3>
+<table>
+<thead>
+<tr>
+<th>Операция</th>
+<th>Контракт</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Цена</td>
+<td><code>calculate-price</code></td>
+</tr>
+<tr>
+<td>Создание</td>
+<td>INSERT <code>orders</code> для собственного <code>client_id</code></td>
+</tr>
+<tr>
+<td>Авторизация оплаты</td>
+<td><code>create-payment-intent</code></td>
+</tr>
+<tr>
+<td>Проверка оплаты</td>
+<td><code>sync-payment-status</code></td>
+</tr>
+<tr>
+<td>Мэтчинг</td>
+<td><code>match-order</code></td>
+</tr>
+<tr>
+<td>Список/детали</td>
+<td>SELECT own <code>orders</code> и разрешённые joins</td>
+</tr>
+<tr>
+<td>Отмена</td>
+<td>UPDATE own order в допустимом статусе</td>
+</tr>
+<tr>
+<td>Оценка</td>
+<td>UPSERT <code>order_ratings</code> для завершённого own order</td>
+</tr>
+<tr>
+<td>Повторное открытие</td>
+<td><code>reopen_order</code></td>
+</tr>
+<tr>
+<td>Диспут</td>
+<td><code>create_order_dispute</code>, <code>add_dispute_attachments</code></td>
+</tr>
+</tbody>
+</table>
+<h3 id="company">Company<a class="headerlink" href="#company" title="Permanent link">&para;</a></h3>
+<table>
+<thead>
+<tr>
+<th>RPC/канал</th>
+<th>Назначение</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>accept_order_company_offer</code></td>
+<td>Принять активный оффер</td>
+</tr>
+<tr>
+<td><code>reject_order_company_offer</code></td>
+<td>Отклонить оффер</td>
+</tr>
+<tr>
+<td><code>assign_order_team</code></td>
+<td>Назначить команду подходящей ёмкости</td>
+</tr>
+<tr>
+<td><code>complete_order_manually</code></td>
+<td>Завершить исполнение</td>
+</tr>
+<tr>
+<td>Realtime <code>order_company_offers</code></td>
+<td>Новый оффер компании</td>
+</tr>
+<tr>
+<td>Realtime <code>orders</code></td>
+<td>Обновление Kanban и деталей</td>
+</tr>
+</tbody>
+</table>
+<h3 id="worker">Worker<a class="headerlink" href="#worker" title="Permanent link">&para;</a></h3>
+<p>Worker получает только назначенные заказы через <code>order_workers</code>/RLS. Фото загружаются в <code>order-photos/{order_id}/...</code> и регистрируются в <code>order_photos</code> с <code>photo_type=before|after</code>.</p>
+<h2 id="_3">Статусы<a class="headerlink" href="#_3" title="Permanent link">&para;</a></h2>
+<table>
+<thead>
+<tr>
+<th>Домен</th>
+<th>Значения</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Order</td>
+<td><code>matching</code>, <code>assigned</code>, <code>in_progress</code>, <code>completed</code>, <code>cancelled</code></td>
+</tr>
+<tr>
+<td>Profile</td>
+<td><code>invited</code>, <code>active</code>, <code>suspended</code>, <code>deactivated</code></td>
+</tr>
+<tr>
+<td>Employment</td>
+<td><code>active</code>, <code>on_leave</code>, <code>terminated</code></td>
+</tr>
+<tr>
+<td>Dispute</td>
+<td><code>open</code>, <code>resolved</code></td>
+</tr>
+<tr>
+<td>Offer</td>
+<td><code>pending</code>, <code>accepted</code>, <code>rejected</code>, <code>expired</code>, <code>skipped</code></td>
+</tr>
+<tr>
+<td>Payment</td>
+<td><code>pending</code>, <code>authorized</code>, <code>captured</code>, <code>refunded</code>, <code>partially_refunded</code>, <code>failed</code></td>
+</tr>
+</tbody>
+</table>
+<h2 id="realtime">Realtime<a class="headerlink" href="#realtime" title="Permanent link">&para;</a></h2>
+<table>
+<thead>
+<tr>
+<th>Таблица</th>
+<th>Filter</th>
+<th>Потребители</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>notifications</code></td>
+<td><code>profile_id=eq.&lt;auth.uid&gt;</code></td>
+<td>Все приложения</td>
+</tr>
+<tr>
+<td><code>orders</code></td>
+<td>RLS + app query</td>
+<td>Client, Company, Admin</td>
+</tr>
+<tr>
+<td><code>order_company_offers</code></td>
+<td>Company RLS</td>
+<td>Company</td>
+</tr>
+</tbody>
+</table>
+<p>После reconnect приложение выполняет refetch: Realtime является сигналом инвалидации, а не единственным источником состояния.</p>
+<h2 id="storage">Storage<a class="headerlink" href="#storage" title="Permanent link">&para;</a></h2>
+<table>
+<thead>
+<tr>
+<th>Bucket</th>
+<th>Доступ</th>
+<th>Path contract</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>avatars</code></td>
+<td>Owner/admin</td>
+<td><code>{profile_id}/...</code></td>
+</tr>
+<tr>
+<td><code>company-logos</code></td>
+<td>Company owner/admin; public delivery</td>
+<td><code>{company_id}/...</code></td>
+</tr>
+<tr>
+<td><code>verification-docs</code></td>
+<td>Company owner/admin</td>
+<td><code>{company_id}/...</code></td>
+</tr>
+<tr>
+<td><code>order-photos</code></td>
+<td>Order participants</td>
+<td><code>{order_id}/...</code></td>
+</tr>
+<tr>
+<td><code>dispute-attachments</code></td>
+<td>Dispute participants/admin</td>
+<td><code>{dispute_id}/...</code></td>
+</tr>
+<tr>
+<td><code>site-assets</code></td>
+<td>Public read, admin write</td>
+<td><code>{section}/...</code></td>
+</tr>
+</tbody>
+</table>
+<p>Private buckets выдаются через signed URL. Клиенты не формируют привилегированные URL самостоятельно.</p>
+<h2 id="_4">Ошибки<a class="headerlink" href="#_4" title="Permanent link">&para;</a></h2>
+<p>Приложения должны различать:</p>
+<ul>
+<li><code>401</code>: отсутствующая/просроченная сессия — refresh или login;</li>
+<li><code>403</code>: роль/RLS/бизнес-запрет — не повторять автоматически;</li>
+<li><code>404</code>: сущность не существует или скрыта RLS;</li>
+<li><code>409</code>: конфликт состояния/идемпотентности;</li>
+<li><code>422</code>: бизнес-валидация;</li>
+<li><code>429</code>/<code>5xx</code>: ограниченный retry с backoff, только для идемпотентных операций.</li>
+</ul>
+
+
+
+
+
+
+
+
+
+
+
+
+                
+              </article>
+            </div>
+          
+          
+<script>var target=document.getElementById(location.hash.slice(1));target&&target.name&&(target.checked=target.name.startsWith("__tabbed_"))</script>
+        </div>
+        
+          <button type="button" class="md-top md-icon" data-md-component="top" hidden>
+  
+  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M13 20h-2V8l-5.5 5.5-1.42-1.42L12 4.16l7.92 7.92-1.42 1.42L13 8z"/></svg>
+  К началу
+</button>
+        
+      </main>
+      
+        <footer class="md-footer">
+  
+  <div class="md-footer-meta md-typeset">
+    <div class="md-footer-meta__inner md-grid">
+      <div class="md-copyright">
+  
+  
+    Made with
+    <a href="https://squidfunk.github.io/mkdocs-material/" target="_blank" rel="noopener">
+      Material for MkDocs
+    </a>
+  
+</div>
+      
+    </div>
+  </div>
+</footer>
+      
+    </div>
+    <div class="md-dialog" data-md-component="dialog">
+      <div class="md-dialog__inner md-typeset"></div>
+    </div>
+    
+    
+    
+      
+      
+      <script id="__config" type="application/json">{"annotate": null, "base": "..", "features": ["navigation.instant", "navigation.sections", "navigation.top", "search.suggest", "search.highlight", "content.code.copy"], "search": "../assets/javascripts/workers/search.2c215733.min.js", "tags": null, "translations": {"clipboard.copied": "\u0421\u043a\u043e\u043f\u0438\u0440\u043e\u0432\u0430\u043d\u043e \u0432 \u0431\u0443\u0444\u0435\u0440", "clipboard.copy": "\u041a\u043e\u043f\u0438\u0440\u043e\u0432\u0430\u0442\u044c \u0432 \u0431\u0443\u0444\u0435\u0440", "search.result.more.one": "\u0415\u0449\u0451 1 \u043d\u0430 \u044d\u0442\u043e\u0439 \u0441\u0442\u0440\u0430\u043d\u0438\u0446\u0435", "search.result.more.other": "\u0415\u0449\u0451 # \u043d\u0430 \u044d\u0442\u043e\u0439 \u0441\u0442\u0440\u0430\u043d\u0438\u0446\u0435", "search.result.none": "\u0421\u043e\u0432\u043f\u0430\u0434\u0435\u043d\u0438\u0439 \u043d\u0435 \u043d\u0430\u0439\u0434\u0435\u043d\u043e", "search.result.one": "\u041d\u0430\u0439\u0434\u0435\u043d\u043e 1 \u0441\u043e\u0432\u043f\u0430\u0434\u0435\u043d\u0438\u0435", "search.result.other": "\u041d\u0430\u0439\u0434\u0435\u043d\u043e \u0441\u043e\u0432\u043f\u0430\u0434\u0435\u043d\u0438\u0439: #", "search.result.placeholder": "\u041d\u0430\u0447\u043d\u0438\u0442\u0435 \u043f\u0435\u0447\u0430\u0442\u0430\u0442\u044c \u0434\u043b\u044f \u043f\u043e\u0438\u0441\u043a\u0430", "search.result.term.missing": "\u041e\u0442\u0441\u0443\u0442\u0441\u0442\u0432\u0443\u0435\u0442", "select.version": "\u0412\u044b\u0431\u0435\u0440\u0438\u0442\u0435 \u0432\u0435\u0440\u0441\u0438\u044e"}, "version": null}</script>
+    
+    
+      <script src="../assets/javascripts/bundle.79ae519e.min.js"></script>
+      
+    
+  </body>
+</html>

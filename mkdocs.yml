@@ -1,0 +1,57 @@
+site_name: ZipDone Knowledge Base
+site_description: Общая техническая документация экосистемы ZipDone
+site_url: https://bohatko.github.io/ZipDone-docs/
+repo_url: https://github.com/bohatko/ZipDone-docs
+repo_name: bohatko/ZipDone-docs
+
+theme:
+  name: material
+  language: ru
+  features:
+    - navigation.instant
+    - navigation.sections
+    - navigation.top
+    - search.suggest
+    - search.highlight
+    - content.code.copy
+  palette:
+    - scheme: default
+      primary: green
+      accent: green
+
+plugins:
+  - search:
+      lang:
+        - ru
+        - en
+
+markdown_extensions:
+  - admonition
+  - attr_list
+  - md_in_html
+  - tables
+  - toc:
+      permalink: true
+  - pymdownx.details
+  - pymdownx.highlight
+  - pymdownx.superfences:
+      custom_fences:
+        - name: mermaid
+          class: mermaid
+          format: !!python/name:pymdownx.superfences.fence_code_format
+
+nav:
+  - Главная: index.md
+  - Архитектура: architecture.md
+  - Контракты:
+      - API и Supabase: api-contracts.md
+      - Схема БД: database-schema.md
+      - Storage и RLS: storage-and-rls.md
+      - Уведомления: notifications.md
+  - Приложения:
+      - Web: apps/web.md
+      - Client: apps/mobile-client.md
+      - Worker: apps/mobile-worker.md
+  - Операции:
+      - Ведение базы знаний: operations/knowledge-base.md
+      - Безопасность документации: operations/security.md

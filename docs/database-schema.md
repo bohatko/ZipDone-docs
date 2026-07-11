@@ -1,7 +1,7 @@
 # ZipDone — Схема базы данных (Production)
 
 > **Источник:** live dump Supabase PostgreSQL 17.6 (проект `nlpswsajjexnaqpwyiph`, eu-west-1)  
-> **Дата снимка:** 2026-07-11 21:52:54 (UTC+3)  
+> **Дата снимка:** 2026-07-11 22:07:53 (UTC+3)  
 > **Версия документа:** 4.0  
 > Стек: **Supabase (PostgreSQL 17 + PostGIS + Auth + Realtime + Storage + pg_cron)**  
 > Регион/валюта: **ОАЭ, AED**, таймзона `Asia/Dubai`  
@@ -14,7 +14,7 @@
 | Проект | **Zipdone** (`nlpswsajjexnaqpwyiph`), регион eu-west-1 |
 | PostgreSQL | 17.6.1.127 |
 | Применено миграций (remote) | 89 |
-| Файлов миграций (local repo) | 68 |
+| Файлов миграций (local repo) | 64 |
 | Таблиц в `public` | 62 (RLS на всех) |
 | Sequences | 2 (`order_number_seq`, `dispute_number_seq`) |
 | Materialized views | 3 (закрыты от Data API) |
@@ -171,7 +171,7 @@
 
 > Remote содержит больше записей, чем файлов в репозитории: часть локальных миграций при деплое разбивалась на несколько шагов (например, `notification_pipeline` → 5 частей).
 
-### Локальный репозиторий (`supabase/migrations/`) — 68 файлов
+### Локальный репозиторий (`supabase/migrations/`) — 64 файлов
 
 | Файл | Содержимое |
 |------|-----------|
@@ -206,20 +206,18 @@
 | `20260610190000_seed_test_orders.sql` | см. имя файла |
 | `20260610210000_platform_settings_public_read.sql` | см. имя файла |
 | `20260611120000_company_onboarding.sql` | см. имя файла |
-| `20260611145512_fix_seed_phone_auth.sql` | см. имя файла |
+| `20260611145632_fix_seed_phone_auth.sql` | см. имя файла |
+| `20260611150959_team_members_lead.sql` | см. имя файла |
 | `20260611160414_realtime_order_company_offers.sql` | см. имя файла |
 | `20260611170000_normalize_phone_e164.sql` | см. имя файла |
 | `20260611180000_partner_phone_auth.sql` | см. имя файла |
 | `20260611190000_auth_phone_lookup.sql` | см. имя файла |
 | `20260611200000_seed_demo_marketplace.sql` | см. имя файла |
-| `20260611210000_fix_seed_phone_auth.sql` | см. имя файла |
-| `20260611210000_team_members_lead.sql` | см. имя файла |
 | `20260611220000_fix_storage_rls_foldername.sql` | см. имя файла |
 | `20260611230000_company_panel_rpcs.sql` | см. имя файла |
 | `20260612120000_resolve_dispute_rpc.sql` | см. имя файла |
 | `20260612140000_add_dispute_attachments_rpc.sql` | см. имя файла |
 | `20260612150000_company_client_profile_rls.sql` | см. имя файла |
-| `20260613114441_fix_companies_guard_trigger_security.sql` | см. имя файла |
 | `20260613120000_company_worker_management.sql` | см. имя файла |
 | `20260613153000_admin_dispute_opened_notify_admins.sql` | см. имя файла |
 | `20260613154500_notifications_admin_rls_fix.sql` | см. имя файла |
@@ -235,11 +233,9 @@
 | `20260614180000_dispute_resolved_notification.sql` | см. имя файла |
 | `20260614190000_auto_complete_hours_setting.sql` | см. имя файла |
 | `20260614200000_company_profile.sql` | см. имя файла |
-| `20260614210000_fix_companies_guard_trigger_security.sql` | см. имя файла |
 | `20260614220000_fix_open_disputes_count.sql` | см. имя файла |
 | `20260614230000_db_cleanup_audit.sql` | см. имя файла |
-| `20260709142650_fix_client_order_rls_recursion.sql` | см. имя файла |
-| `20260709150000_fix_client_order_rls_recursion.sql` | см. имя файла |
+| `20260709143000_fix_client_order_rls_recursion.sql` | см. имя файла |
 | `20260710103742_team_stats_denormalization.sql` | см. имя файла |
 | `20260711150000_find_matching_companies_team_capacity.sql` | см. имя файла |
 | `20260711160000_admin_matching_exhausted.sql` | см. имя файла |

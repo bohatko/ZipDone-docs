@@ -168,7 +168,7 @@ Private buckets выдаются через signed URL. Клиенты не фо
 
 | Риск | Детали |
 |---|---|
-| Миграции | Канон: `ZipDone-web/supabase/migrations/` (68 local / 89 remote). Client repo: 6 локальных SQL. |
+| Миграции | Канон: `ZipDone-web/supabase/migrations/` (64 local / 89 remote). Пустые placeholders и duplicate timestamps удалены 2026-07-11. |
 | Client cancel | Прямой UPDATE `orders`, не RPC |
 | Client reopen | RPC + fallback UPDATE |
 | Worker push routes | `/booking/:id` → `/booking` (detail route отсутствует) |
